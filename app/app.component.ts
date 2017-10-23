@@ -6,8 +6,9 @@ import { Component } from '@angular/core';
   <div class="container">
     <h1>To Do List for {{month}}/{{day}}/{{year}}</h1>
     <h3>{{currentFocus}}</h3>
+
     <ul>
-      <li>{{firstTask.description}}</li>
+      <li *ngFor="let currentTask of tasks">{{currentTask.description}}</li>
     </ul>
   </div>
   `
@@ -19,7 +20,11 @@ export class AppComponent {
   month: number = this.currentTime.getMonth() + 1;
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
-  firstTask: Task = new Task("Finish weekend homework");
+  tasks: Task[] = [
+    new Task('Finish angular homework'),
+    new Task('Brainstorm group projects'),
+    new Task('Add READMEs to repos')
+  ];
 }
 
 export class Task {
