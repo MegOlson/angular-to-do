@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
     <h3>{{currentFocus}}</h3>
 
     <ul>
-      <li (click)="isDone(currentTask)" *ngFor="let currentTask of tasks">
+      <li [class]="priorityColor(currentTask)" (click)="isDone(currentTask)" *ngFor="let currentTask of tasks">
         {{currentTask.description}}
         <button (click)="editTask()">Edit!</button>
       </li>
@@ -24,9 +24,9 @@ export class AppComponent {
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
   tasks: Task[] = [
-    new Task('Finish angular homework'),
-    new Task('Brainstorm group projects'),
-    new Task('Add READMEs to repos')
+    new Task('Finish angular homework', 3),
+    new Task('Brainstorm group projects', 2),
+    new Task('Add READMEs to repos', 2)
   ];
 
   editTask() {
@@ -40,9 +40,19 @@ export class AppComponent {
       alert("This task is not done. Better get to work!");
     }
   }
+
+  priorityColor(currentTask){
+    if (currentTask.priority === 3){
+      return "bg-danger";
+    } else if (currentTask.priority === 2) {
+      return  "bg-warning";
+    } else {
+      return "bg-info";
+    }
+  }
 }
 
 export class Task {
   public done: boolean = false;
-  constructor(public description: string) {}
+  constructor(public description: string, public priority: number) {   }
 }
